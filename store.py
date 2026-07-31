@@ -3,6 +3,7 @@ from products import Product
 
 
 class Store:
+    """Represents a store with a collection of products."""
 
     def __init__(self, products: List[Product]):
         self.products: List[Product] = products
@@ -32,6 +33,7 @@ class Store:
 
 
 def main():
+    """Main function to demonstrate store functionality."""
     # bose = Product("Bose QuietComfort Earbuds", price=250, quantity=500)
     # mac = Product("MacBook Air M2", price=1450, quantity=100)
 

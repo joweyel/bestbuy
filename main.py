@@ -10,14 +10,13 @@ def start(store: Store) -> None:
     store : Store
         The store object to interact with.
     """
-    
+
     def parse_int(raw_input: str) -> int | None:
         """Parses string to integer if valid digit."""
         if raw_input.isdigit():
             return int(raw_input)
         return None
-        
-    
+
     while True:
         # Lists the available options.
         print("\n   Store Menu")
@@ -59,11 +58,17 @@ def start(store: Store) -> None:
                 if product_number == "":
                     break
 
-                if (index := parse_int(product_number)) is None or index < 1 or index > len(products_list):
+                if (
+                    (index := parse_int(product_number)) is None
+                    or index < 1
+                    or index > len(products_list)
+                ):
                     continue
-                index -= 1 # Convert 1-based index to 0-based list index
+                index -= 1  # Convert 1-based index to 0-based list index
 
-                if (amount := parse_int(input("What amount do you want? "))) is None or amount <= 0:
+                if (
+                    amount := parse_int(input("What amount do you want? "))
+                ) is None or amount <= 0:
                     continue
                 shopping_list.append((products_list[index], amount))
                 print("Product added to list!")

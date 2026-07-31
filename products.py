@@ -1,4 +1,7 @@
 class Product:
+    """
+    Represents a product in the store.
+    """
     def __init__(
         self,
         name: str,
@@ -69,6 +72,7 @@ class Product:
         return self.price * quantity
 
 def main():
+    """Main function to demonstrate product functionality."""
     bose = Product("Bose QuietComfort Earbuds", price=250, quantity=500)
     mac = Product("MacBook Air M2", price=1450, quantity=100)
 
