@@ -28,21 +28,33 @@ class Product:
         if name == "" or price < 0 or quantity < 0:
             raise ValueError("Invalid product parameters")
 
-        self.name: str = name
-        self.price: float = price
-        self.quantity: float = quantity
+        self._name: str = name
+        self._price: float = price
+        self._quantity: int = quantity
         self.active: bool = True
+
+    @property
+    def name(self) -> str:
+        return self._name
+
+    @property
+    def price(self) -> float:
+        return self._price
+    
+    @property
+    def quantity(self) -> int:
+        return self._quantity
 
     def get_quantity(self) -> int:
         """Returns the quantity of the product."""
-        return self.quantity
+        return self._quantity
 
     def set_quantity(self, quantity) -> None:
         """Sets the quantity of the product."""
         if quantity < 0:
             raise ValueError("Quantity cannot be negative.")
-        self.quantity = quantity
-        if self.quantity == 0:
+        self._quantity = quantity
+        if self._quantity == 0:
             self.active = False
 
     def is_active(self) -> bool:
@@ -59,17 +71,17 @@ class Product:
 
     def show(self) -> None:
         """Displays the product information."""
-        print(f"{self.name}, Price: {self.price}, Quantity: {self.quantity}")
+        print(f"{self._name}, Price: {self._price}, Quantity: {self._quantity}")
 
     def buy(self, quantity) -> float:
         """
         Buys the given quantity and returns the total cost.
         Raises ValueError if not enough stock is available.
         """
-        if quantity > self.quantity:
+        if quantity > self._quantity:
             raise ValueError("Not enough products available.")
-        self.set_quantity(self.quantity - quantity)
-        return self.price * quantity
+        self.set_quantity(self._quantity - quantity)
+        return self._price * quantity
 
 def main():
     """Main function to demonstrate product functionality."""
