@@ -36,13 +36,13 @@ def start(store: Store) -> None:
         if choice == 1:
             print("------")
             for product in store.get_all_products():
-                product.show()
+                print(product)
             print("------")
 
         elif choice == 2:
             # Show total amount
             total_amount_products: int = sum(
-                product.get_quantity() for product in store.get_all_products()
+                product.quantity for product in store.get_all_products()
             )
             print(f"Total of {total_amount_products} items in store")
 
@@ -52,7 +52,7 @@ def start(store: Store) -> None:
             products_list = store.get_all_products()
             for idx, product in enumerate(products_list):
                 print(f"{idx + 1}.", end=" ")
-                product.show()
+                print(product)
             print("------")
             print("When you want to finish order, enter empty text.")
 

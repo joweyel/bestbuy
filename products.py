@@ -37,43 +37,53 @@ class Product:
         self._price: float = price
         self._quantity: int = quantity
         self._promotion: Promotion | None = promotion
-        self.active: bool = True
+        self._active: bool = True
 
     @property
     def name(self) -> str:
+        """Returns the name of the product."""
         return self._name
+
+    @name.setter
+    def name(self, new_name: str) -> None:
+        """Sets the name of the product."""
+        self._name = new_name
 
     @property
     def price(self) -> float:
+        """Returns the price of the product."""
         return self._price
+
+    @price.setter
+    def price(self, new_price: float) -> None:
+        """Sets the price of the product."""
+        if new_price < 0:
+            raise ValueError("Price cannot be negative.")
+        self._price = new_price
 
     @property
     def quantity(self) -> int:
-        return self._quantity
-
-    def get_quantity(self) -> int:
         """Returns the quantity of the product."""
         return self._quantity
 
-    def set_quantity(self, quantity: int) -> None:
+    @quantity.setter
+    def quantity(self, new_quantity: int) -> None:
         """Sets the quantity of the product."""
-        if quantity < 0:
+        if new_quantity < 0:
             raise ValueError("Quantity cannot be negative.")
-        self._quantity = quantity
+        self._quantity = new_quantity
         if self._quantity == 0:
             self.active = False
 
-    def is_active(self) -> bool:
+    @property
+    def active(self) -> bool:
         """Returns whether the product is active."""
-        return self.active
+        return self._active
 
-    def activate(self) -> None:
-        """Activates the product."""
-        self.active = True
-
-    def deactivate(self) -> None:
-        """Deactivates the product."""
-        self.active = False
+    @active.setter
+    def active(self, new_active: bool) -> None:
+        """Sets whether the product is active."""
+        self._active = new_active
 
     @property
     def promotion(self) -> Promotion | None:
@@ -97,16 +107,30 @@ class Product:
         """
         if quantity > self._quantity:
             raise ValueError("Not enough products available.")
-        self.set_quantity(self._quantity - quantity)
+        self.quantity = self._quantity - quantity
         if self.promotion:
             return self.promotion.apply_promotion(self, quantity)
         return self._price * quantity
 
-    def show(self) -> None:
+    def __str__(self) -> str:
         """Displays the product information."""
-        print(
-            f"{self._name}, Price: {self._price}, Quantity: {self._quantity}{self._promotion_info}"
-        )
+        return f"{self._name}, Price: {self._price}, Quantity: {self._quantity}{self._promotion_info}"
+
+    def __gt__(self, other_product: "Product") -> bool:
+        """Compares the price of this product with another product."""
+        return self._price > other_product._price
+
+    def __ge__(self, other_product: "Product") -> bool:
+        """Compares the price of this product with another product."""
+        return self._price >= other_product._price
+
+    def __lt__(self, other_product: "Product") -> bool:
+        """Compares the price of this product with another product."""
+        return self._price < other_product._price
+
+    def __le__(self, other_product: "Product") -> bool:
+        """Compares the price of this product with another product."""
+        return self._price <= other_product._price
 
 
 class NonStockedProduct(Product):
@@ -122,9 +146,9 @@ class NonStockedProduct(Product):
             return self.promotion.apply_promotion(self, quantity)
         return self._price * quantity
 
-    def show(self) -> None:
+    def __str__(self) -> str:
         """Displays the product information."""
-        print(f"{self._name}, Price: {self._price}{self._promotion_info}")
+        return f"{self._name}, Price: {self._price}{self._promotion_info}"
 
 
 class LimitedProduct(Product):
@@ -147,9 +171,9 @@ class LimitedProduct(Product):
             )
         return super().buy(quantity)
 
-    def show(self) -> None:
+    def __str__(self) -> str:
         """Displays the product information."""
-        print(
+        return (
             f"{self._name}, Price: {self._price}, "
             f"Quantity: {self._quantity}, Maximum Quantity: {self._maximum}{self._promotion_info}"
         )
@@ -162,13 +186,13 @@ def main():
 
     print(bose.buy(50))
     print(mac.buy(100))
-    print(mac.is_active())
+    print(mac.active)
 
-    bose.show()
-    mac.show()
+    print(bose)
+    print(mac)
 
-    bose.set_quantity(1000)
-    bose.show()
+    bose.quantity = 1000
+    print(bose)
 
 
 if __name__ == "__main__":

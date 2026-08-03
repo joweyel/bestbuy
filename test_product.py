@@ -8,7 +8,7 @@ def test_create_product():
     assert product.name == "MacBook Air M2"
     assert product.price == 1450
     assert product.quantity == 100
-    assert product.is_active() == True
+    assert product.active == True
 
 
 def test_create_product_with_invalid_details():
@@ -24,8 +24,8 @@ def test_create_product_with_invalid_details():
 def test_product_becomes_inactive_when_quantity_reaches_zero():
     """Test that when a product reaches 0 quantity, it becomes inactive."""
     product = Product("MacBook Air M2", price=1450, quantity=100)
-    product.set_quantity(0)
-    assert product.is_active() == False
+    product.quantity = 0
+    assert product.active == False
 
 
 def test_product_purchase_modifies_quantity_and_returns_right_output():
@@ -64,9 +64,9 @@ def test_nonstocked_product_quantity_stays_zero():
 def test_nonstocked_product_remains_active():
     """Test that NonStockedProduct remains active after purchase."""
     product = NonStockedProduct("Windows License", price=125)
-    assert product.is_active() == True
+    assert product.active == True
     product.buy(1)
-    assert product.is_active() == True
+    assert product.active == True
 
 
 def test_nonstocked_product_returns_correct_total_price():
