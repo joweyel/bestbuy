@@ -60,22 +60,26 @@ def test_nonstocked_product_quantity_stays_zero():
     assert product.buy(purchase_quantity) == product.price * purchase_quantity
     assert product.quantity == 0
 
+
 def test_nonstocked_product_remains_active():
     """Test that NonStockedProduct remains active after purchase."""
     product = NonStockedProduct("Windows License", price=125)
     assert product.is_active() == True
     product.buy(1)
     assert product.is_active() == True
-    
+
+
 def test_nonstocked_product_returns_correct_total_price():
     """4. buy(quantity) gibt den korrekten Gesamtpreis zurück (price * quantity)."""
     purchase_quantity: int = 2
     product = NonStockedProduct("Windows License", price=125)
     assert product.buy(purchase_quantity) == purchase_quantity * product.price
-    
+
+
 # ============================ #
 # LimitedProduct Tests         #
 # ============================ #
+
 
 def test_limited_product_creation_sets_quantity_and_maximum():
     """Test that LimitedProduct sets quantity and maximum correctly."""
@@ -83,11 +87,13 @@ def test_limited_product_creation_sets_quantity_and_maximum():
     assert product.quantity == 250
     assert product._maximum == 1
 
+
 def test_limited_product_buy_within_maximum_reduces_quantity_and_returns_correct_price():
     """Test that LimitedProduct buy within maximum reduces quantity and returns correct price."""
     product = LimitedProduct("Shipping", price=10, quantity=250, maximum=1)
     assert product.buy(1) == 10
     assert product.quantity == 249
+
 
 def test_limited_product_buy_over_maximum_raises_exception():
     """Test that LimitedProduct buy over maximum raises exception."""
@@ -95,9 +101,9 @@ def test_limited_product_buy_over_maximum_raises_exception():
     with pytest.raises(ValueError):
         product.buy(2)
 
+
 def test_limited_product_buy_exceeding_stock_raises_exception():
     """Test that LimitedProduct buy exceeding stock (but within maximum) raises exception."""
     product = LimitedProduct("Shipping", price=10, quantity=1, maximum=5)
     with pytest.raises(ValueError):
         product.buy(2)
-
