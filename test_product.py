@@ -48,13 +48,13 @@ def test_buy_larger_quantity_than_exists():
 # ======================== #
 
 
-def test_nonstocked_product_quantity_is_zero():
+def test_nonstocked_product_quantity_is_zero() -> None:
     """Test that NonStockedProduct has quantity 0 by default."""
     product = NonStockedProduct("Windows License", price=125)
     assert product.quantity == 0
 
 
-def test_nonstocked_product_quantity_stays_zero():
+def test_nonstocked_product_quantity_stays_zero() -> None:
     """Test that NonStockedProduct quantity stays 0 after purchase."""
     purchase_quantity: int = 2
     product = NonStockedProduct("Windows License", price=125)
@@ -62,7 +62,7 @@ def test_nonstocked_product_quantity_stays_zero():
     assert product.quantity == 0
 
 
-def test_nonstocked_product_remains_active():
+def test_nonstocked_product_remains_active() -> None:
     """Test that NonStockedProduct remains active after purchase."""
     product = NonStockedProduct("Windows License", price=125)
     assert product.active == True
@@ -70,7 +70,7 @@ def test_nonstocked_product_remains_active():
     assert product.active == True
 
 
-def test_nonstocked_product_returns_correct_total_price():
+def test_nonstocked_product_returns_correct_total_price() -> None:
     """4. buy(quantity) gibt den korrekten Gesamtpreis zurück (price * quantity)."""
     purchase_quantity: int = 2
     product = NonStockedProduct("Windows License", price=125)
@@ -82,28 +82,30 @@ def test_nonstocked_product_returns_correct_total_price():
 # ============================ #
 
 
-def test_limited_product_creation_sets_quantity_and_maximum():
+def test_limited_product_creation_sets_quantity_and_maximum() -> None:
     """Test that LimitedProduct sets quantity and maximum correctly."""
     product = LimitedProduct("Shipping", price=10, quantity=250, maximum=1)
     assert product.quantity == 250
     assert product._maximum == 1
 
 
-def test_limited_product_buy_within_maximum_reduces_quantity_and_returns_correct_price():
+def test_limited_product_buy_within_maximum_reduces_quantity_and_returns_correct_price() -> (
+    None
+):
     """Test that LimitedProduct buy within maximum reduces quantity and returns correct price."""
     product = LimitedProduct("Shipping", price=10, quantity=250, maximum=1)
     assert product.buy(1) == 10
     assert product.quantity == 249
 
 
-def test_limited_product_buy_over_maximum_raises_exception():
+def test_limited_product_buy_over_maximum_raises_exception() -> None:
     """Test that LimitedProduct buy over maximum raises exception."""
     product = LimitedProduct("Shipping", price=10, quantity=250, maximum=1)
     with pytest.raises(ValueError):
         product.buy(2)
 
 
-def test_limited_product_buy_exceeding_stock_raises_exception():
+def test_limited_product_buy_exceeding_stock_raises_exception() -> None:
     """Test that LimitedProduct buy exceeding stock (but within maximum) raises exception."""
     product = LimitedProduct("Shipping", price=10, quantity=1, maximum=5)
     with pytest.raises(ValueError):

@@ -1,4 +1,3 @@
-
 from products import Product
 
 
@@ -40,7 +39,7 @@ class Store:
         return Store(self._products + other_store._products)
 
 
-def main():
+def main() -> None:
     """Main function to demonstrate store functionality."""
     product_list: list[Product] = [
         Product("MacBook Air M2", price=1450, quantity=100),
