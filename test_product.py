@@ -1,5 +1,6 @@
 import pytest
-from products import Product, NonStockedProduct, LimitedProduct
+
+from products import LimitedProduct, NonStockedProduct, Product
 
 
 def test_create_product():

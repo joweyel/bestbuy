@@ -1,12 +1,12 @@
-from typing import List, Tuple
+
 from products import Product
 
 
 class Store:
     """Represents a store with a collection of products."""
 
-    def __init__(self, products: List[Product]):
-        self._products: List[Product] = products
+    def __init__(self, products: list[Product]):
+        self._products: list[Product] = products
 
     def add_product(self, product: Product) -> None:
         """Adds a product to the store."""
@@ -20,11 +20,11 @@ class Store:
         """Returns how many items are in the store in total."""
         return sum(product.quantity for product in self._products)
 
-    def get_all_products(self) -> List[Product]:
+    def get_all_products(self) -> list[Product]:
         """Returns all products in the store that are active."""
         return [product for product in self._products if product.active]
 
-    def order(self, shopping_list: List[Tuple[Product, int]]) -> float:
+    def order(self, shopping_list: list[tuple[Product, int]]) -> float:
         """Processes an order and returns the total price."""
         total = 0.0
         for product, quantity in shopping_list:
@@ -42,7 +42,7 @@ class Store:
 
 def main():
     """Main function to demonstrate store functionality."""
-    product_list: List[Product] = [
+    product_list: list[Product] = [
         Product("MacBook Air M2", price=1450, quantity=100),
         Product("Bose QuietComfort Earbuds", price=250, quantity=500),
         Product("Google Pixel 7", price=500, quantity=250),

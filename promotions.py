@@ -1,5 +1,8 @@
-from typing import override
 from abc import ABC, abstractmethod
+from typing import TYPE_CHECKING, override
+
+if TYPE_CHECKING:
+    from products import Product
 
 
 class Promotion(ABC):
