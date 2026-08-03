@@ -2,6 +2,7 @@ class Product:
     """
     Represents a product in the store.
     """
+
     def __init__(
         self,
         name: str,
@@ -40,7 +41,7 @@ class Product:
     @property
     def price(self) -> float:
         return self._price
-    
+
     @property
     def quantity(self) -> int:
         return self._quantity
@@ -83,6 +84,49 @@ class Product:
         self.set_quantity(self._quantity - quantity)
         return self._price * quantity
 
+
+class NonStockedProduct(Product):
+    def __init__(self, name: str, price: float):
+        super().__init__(name, price, 0)
+
+    def buy(self, quantity: int) -> float:
+        """
+        Buys the given quantity and returns the total cost.
+        Non-stocked immaterial goods dont reduce the stock.
+        """
+        return self._price * quantity
+
+    def show(self):
+        """Displays the product information."""
+        print(f"{self._name}, Price: {self._price}")
+
+
+class LimitedProduct(Product):
+    def __init__(
+        self,
+        name: str,
+        price: float,
+        quantity: int,
+        maximum: int,
+    ):
+        super().__init__(name, price, quantity)
+        self._maximum = maximum
+
+    def buy(self, quantity: int) -> float:
+        if quantity > self._maximum:
+            raise ValueError(
+                f"Limited products can only be bought in quantities of {self._maximum}."
+            )
+        return super().buy(quantity)
+
+    def show(self):
+        """Displays the product information."""
+        print(
+            f"{self._name}, Price: {self._price}, "
+            f"Quantity: {self._quantity}, Maximum Quantity: {self._maximum}"
+        )
+
+
 def main():
     """Main function to demonstrate product functionality."""
     bose = Product("Bose QuietComfort Earbuds", price=250, quantity=500)
@@ -97,6 +141,7 @@ def main():
 
     bose.set_quantity(1000)
     bose.show()
+
 
 if __name__ == "__main__":
     main()
